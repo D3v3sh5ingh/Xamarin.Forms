@@ -1,0 +1,5 @@
+﻿<resources>
+    <string name="app_name">Xamarin Forms Control Gallery</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+</resources>

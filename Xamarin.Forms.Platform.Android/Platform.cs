@@ -766,13 +766,39 @@ namespace Xamarin.Forms.Platform.Android
 				return;
 			}
 
+			string resource = "";
+			if (CurrentMasterDetailPage?.Master?.Icon != null)
+			{
+				var iconAutomationId = CurrentMasterDetailPage.Master.Icon.AutomationId;
+				if (!string.IsNullOrEmpty(iconAutomationId))
+					resource = iconAutomationId;
+			}
+
+			var s = ResourceManager.GetResourceByName("drawer_open");
 #pragma warning disable 618 // Eventually we will need to determine how to handle the v7 ActionBarDrawerToggle for AppCompat
-			MasterDetailPageToggle = new ActionBarDrawerToggle(_activity, drawer, icon, 0, 0);
-#pragma warning restore 618
+			MasterDetailPageToggle = new CustomActionBarDrawerToggle(_activity, drawer, icon, resource);
 
 			MasterDetailPageToggle.SyncState();
 		}
 
+		public class CustomActionBarDrawerToggle : ActionBarDrawerToggle
+		{
+			public CustomActionBarDrawerToggle(Activity activity, global::Android.Support.V4.Widget.DrawerLayout drawer, int drawerImageResource, string automationId) : base(activity, drawer, drawerImageResource,0 ,0)
+			{
+
+			}
+
+			 
+			public override void SyncState()
+			{
+				base.SyncState();
+			}
+		}
+		void SetAutomationId(ActionBarDrawerToggle masterDetailPageToggle, Element element, string id)
+		{
+			
+		}
+#pragma warning restore 618
 		bool HandleBackPressed(object sender, EventArgs e)
 		{
 			if (NavAnimationInProgress)
